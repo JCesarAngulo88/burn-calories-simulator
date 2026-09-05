@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Burn Calories Simulator</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="card profile">
+        <h2>User profile</h2>
+        <form id="user-form">
+          <label>Name <input type="text" id="user-name" required /></label>
+          <label>Age <input type="number" id="user-age" min="1" required /></label>
+          <label>Email <input type="email" id="user-email" required /></label>
+          <label>Weight (kg, optional) <input type="number" id="user-weight" min="1" step="0.1" /></label>
+          <label>Height (cm, optional) <input type="number" id="user-height" min="1" step="0.1" /></label>
+          <button type="submit">Save profile</button>
+        </form>
+        <p id="user-message" class="message" aria-live="polite"></p>
+      </section>
+      <section class="card calculator">
+        <h1>Burn Calories Simulator</h1>
+        <form id="workout-form">
+          <label>Activity <select id="activity" name="activity"><option value="running">Running</option><option value="walking">Walking</option><option value="cycling">Cycling</option><option value="swimming">Swimming</option><option value="yoga">Yoga</option><option value="gym">Gym</option></select></label>
+          <label>Weight (kg) <input type="number" id="weight" value="70" min="1" step="0.1" required /></label>
+          <label>Duration (minutes) <input type="number" id="duration" value="30" min="1" step="1" required /></label>
+          <button type="submit">Calculate</button>
+        </form>
+        <div id="result" class="result hidden"><h2>Estimated calories burned</h2><p><span id="calories">0</span> kcal</p></div>
+      </section>
+      <section class="card history"><h2>Recent workouts</h2><ul id="history-list"></ul></section>
+    </main>
+    <script src="js/app.js"></script>
+  </body>
+</html>
