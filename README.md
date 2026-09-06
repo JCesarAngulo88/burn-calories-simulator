@@ -42,6 +42,19 @@ The backend is organized by responsibility so API routes, business logic, and pe
    docker compose down
    ```
 
+## Run integration tests
+
+The integration suite starts a temporary PostgreSQL container, a backend connected
+to that database, and a dedicated pytest runner. It verifies API responses and
+confirms that successful requests create rows in PostgreSQL.
+
+```bash
+docker compose -f docker-compose.test.yml up --build --abort-on-container-exit --exit-code-from tests
+docker compose -f docker-compose.test.yml down -v
+```
+
+The `down -v` command removes the temporary test database volume and containers.
+
 ## Check the PostgreSQL database
 
 Once the app is running, you can inspect the database directly from the PostgreSQL Docker container:
@@ -55,6 +68,7 @@ Then run:
 ```sql
 \dt
 SELECT * FROM workout_entries ORDER BY created_at DESC;
+SELECT * FROM exercise_needed_entries ORDER BY created_at DESC;
 SELECT * FROM users ORDER BY created_at DESC;
 SELECT * FROM activities ORDER BY created_at DESC;
 ```
@@ -63,6 +77,7 @@ You can also check the number of saved records:
 
 ```sql
 SELECT COUNT(*) FROM workout_entries;
+SELECT COUNT(*) FROM exercise_needed_entries;
 ```
 
 PostgreSQL is intentionally not published to the host; connect through `docker compose exec` or expose it only in a local development override. Keep production credentials in environment or secret-manager configuration rather than committing them.
@@ -157,6 +172,28 @@ Example response:
     "createdAt": "2026-09-01T12:00:00+00:00"
   }
 ]
+```
+
+### Calculate exercise needed
+
+The API stores the calories consumed, selected activity, weight, and calculated exercise duration:
+
+```bash
+curl -X POST http://localhost:8000/api/exercise-needed \
+  -H "Content-Type: application/json" \
+  -d '{
+    "activity": "running",
+    "caloriesConsumed": 500,
+    "weightKg": 70
+  }'
+```
+
+Expected response fields include `durationMinutes`, the estimated minutes needed to burn the consumed calories.
+
+Saved calculations can be listed with:
+
+```bash
+curl http://localhost:8000/api/exercise-needed
 ```
 
 ### Get one workout by id

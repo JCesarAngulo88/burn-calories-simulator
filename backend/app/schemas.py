@@ -17,6 +17,20 @@ class WorkoutResponse(WorkoutInput):
     createdAt: datetime
 
 
+class ExerciseNeededInput(BaseModel):
+    activity: str = Field(min_length=1)
+    caloriesConsumed: float = Field(gt=0)
+    weightKg: float = Field(gt=0)
+
+
+class ExerciseNeededResponse(ExerciseNeededInput):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    durationMinutes: float
+    createdAt: datetime
+
+
 class UserInput(BaseModel):
     name: str = Field(min_length=1)
     age: int = Field(gt=0)

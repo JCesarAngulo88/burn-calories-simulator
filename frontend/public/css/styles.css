@@ -11,6 +11,7 @@ button { border: none; background: var(--primary); color: white; font-weight: 70
 button:hover { background: var(--primary-dark); }
 .result { margin-top: 24px; padding: 18px; border-radius: 12px; background: #ecfff6; border: 1px solid #c7efd9; }
 .result p { margin: 0; font-size: 2rem; font-weight: bold; color: var(--success); }
+.helper-text { color: var(--muted); line-height: 1.5; }
 .message { min-height: 1.25rem; margin-bottom: 0; color: var(--success); }
 .message.error { color: #c0392b; }
 .hidden { display: none; }

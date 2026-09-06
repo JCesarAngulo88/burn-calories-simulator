@@ -24,6 +24,17 @@ class WorkoutEntry(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
 
 
+class ExerciseNeededEntry(Base):
+    __tablename__ = "exercise_needed_entries"
+
+    id = Column(Integer, primary_key=True, index=True)
+    activity = Column(String, nullable=False)
+    calories_consumed = Column(Float, nullable=False)
+    weight_kg = Column(Float, nullable=False)
+    duration_minutes = Column(Float, nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+
 class User(Base):
     __tablename__ = "users"
 

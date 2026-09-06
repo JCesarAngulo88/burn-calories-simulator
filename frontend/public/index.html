@@ -31,7 +31,23 @@
         </form>
         <div id="result" class="result hidden"><h2>Estimated calories burned</h2><p><span id="calories">0</span> kcal</p></div>
       </section>
+      <section class="card exercise-needed">
+        <h2>Exercise Needed</h2>
+        <p class="helper-text">Find out how long to exercise to burn the calories you consumed today.</p>
+        <form id="exercise-needed-form">
+          <label>Calories consumed <input type="number" id="calories-consumed" min="1" step="1" required /></label>
+          <label>Activity <select id="needed-activity" required></select></label>
+          <label>Weight (kg) <input type="number" id="needed-weight" value="70" min="1" step="0.1" required /></label>
+          <button type="submit">Calculate exercise time</button>
+        </form>
+        <div id="exercise-needed-result" class="result hidden">
+          <h2>Exercise time needed</h2>
+          <p><span id="needed-minutes">0</span> minutes</p>
+        </div>
+        <p id="exercise-needed-message" class="message" aria-live="polite"></p>
+      </section>
       <section class="card history"><h2>Recent workouts</h2><ul id="history-list"></ul></section>
+      <section class="card history"><h2>Exercise needed history</h2><ul id="exercise-needed-history-list"></ul></section>
     </main>
     <datalist id="activity-options"></datalist>
     <dialog id="new-activity-dialog" class="activity-dialog">
