@@ -16,3 +16,6 @@ button:hover { background: var(--primary-dark); }
 .hidden { display: none; }
 #history-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
 #history-list li { border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; background: #f9fbff; color: var(--muted); }
+.activity-dialog { border: 0; border-radius: 16px; padding: 28px; max-width: 420px; width: calc(100% - 32px); box-shadow: var(--shadow); }
+.activity-dialog::backdrop { background: rgba(29, 35, 51, .45); }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }

@@ -16,6 +16,7 @@
           <label>Email <input type="email" id="user-email" required /></label>
           <label>Weight (kg, optional) <input type="number" id="user-weight" min="1" step="0.1" /></label>
           <label>Height (cm, optional) <input type="number" id="user-height" min="1" step="0.1" /></label>
+          <label>Activity preferred <input type="text" id="activity-preferred" list="activity-options" placeholder="e.g. Running" /></label>
           <button type="submit">Save profile</button>
         </form>
         <p id="user-message" class="message" aria-live="polite"></p>
@@ -23,7 +24,7 @@
       <section class="card calculator">
         <h1>Burn Calories Simulator</h1>
         <form id="workout-form">
-          <label>Activity <select id="activity" name="activity"><option value="running">Running</option><option value="walking">Walking</option><option value="cycling">Cycling</option><option value="swimming">Swimming</option><option value="yoga">Yoga</option><option value="gym">Gym</option></select></label>
+          <label>Activity <select id="activity" name="activity" required></select></label>
           <label>Weight (kg) <input type="number" id="weight" value="70" min="1" step="0.1" required /></label>
           <label>Duration (minutes) <input type="number" id="duration" value="30" min="1" step="1" required /></label>
           <button type="submit">Calculate</button>
@@ -32,6 +33,20 @@
       </section>
       <section class="card history"><h2>Recent workouts</h2><ul id="history-list"></ul></section>
     </main>
+    <datalist id="activity-options"></datalist>
+    <dialog id="new-activity-dialog" class="activity-dialog">
+      <form id="new-activity-form" method="dialog">
+        <h2>New Activity Info</h2>
+        <p id="activity-dialog-message">If you want to create a new activity, complete the details below.</p>
+        <label>Activity name <input type="text" id="new-activity-name" required maxlength="80" /></label>
+        <label>MET value <input type="number" id="new-activity-met" min="0.1" max="30" step="0.1" required /></label>
+        <div class="dialog-actions">
+          <button type="button" id="cancel-activity">Cancel</button>
+          <button type="submit">Create Activity</button>
+        </div>
+        <p id="activity-message" class="message" aria-live="polite"></p>
+      </form>
+    </dialog>
     <script src="js/app.js"></script>
   </body>
 </html>

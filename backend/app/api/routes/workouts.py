@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
 
 from ...database import get_db
-from ...models import WorkoutEntry
+from ...models import Activity, WorkoutEntry
 from ...schemas import WorkoutInput, WorkoutResponse
 from ...services.calorie_service import calculate_calories
 
@@ -23,9 +23,13 @@ def find_workout(workout_id: int, db: Session) -> WorkoutEntry:
 
 @router.post("", response_model=WorkoutResponse, status_code=201)
 def create_workout(payload: WorkoutInput, db: Session = Depends(get_db)):
+    activity = db.query(Activity).filter(Activity.name.ilike(payload.activity.strip())).first()
+    if activity is None:
+        raise HTTPException(status_code=400, detail="Activity is not available")
     entry = WorkoutEntry(activity=payload.activity, duration_minutes=payload.durationMinutes,
                          weight_kg=payload.weightKg,
-                         calories_burned=calculate_calories(payload.activity, payload.durationMinutes, payload.weightKg))
+                         calories_burned=calculate_calories(payload.activity, payload.durationMinutes,
+                                                            payload.weightKg, activity.met_value))
     db.add(entry)
     db.commit()
     db.refresh(entry)
@@ -46,10 +50,14 @@ def get_workout(workout_id: int, db: Session = Depends(get_db)):
 @router.put("/{workout_id}", response_model=WorkoutResponse)
 def update_workout(workout_id: int, payload: WorkoutInput, db: Session = Depends(get_db)):
     entry = find_workout(workout_id, db)
+    activity = db.query(Activity).filter(Activity.name.ilike(payload.activity.strip())).first()
+    if activity is None:
+        raise HTTPException(status_code=400, detail="Activity is not available")
     entry.activity = payload.activity
     entry.duration_minutes = payload.durationMinutes
     entry.weight_kg = payload.weightKg
-    entry.calories_burned = calculate_calories(payload.activity, payload.durationMinutes, payload.weightKg)
+    entry.calories_burned = calculate_calories(payload.activity, payload.durationMinutes,
+                                               payload.weightKg, activity.met_value)
     db.commit()
     db.refresh(entry)
     return serialize_workout(entry)

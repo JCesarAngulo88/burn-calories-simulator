@@ -4,6 +4,15 @@ from sqlalchemy.sql import func
 from .database import Base
 
 
+class Activity(Base):
+    __tablename__ = "activities"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False, unique=True, index=True)
+    met_value = Column(Float, nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+
 class WorkoutEntry(Base):
     __tablename__ = "workout_entries"
 
@@ -24,4 +33,5 @@ class User(Base):
     email = Column(String, nullable=False, unique=True, index=True)
     weight_kg = Column(Float, nullable=True)
     height_cm = Column(Float, nullable=True)
+    activity_preferred = Column(String, nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)

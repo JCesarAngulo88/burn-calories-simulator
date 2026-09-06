@@ -56,6 +56,7 @@ Then run:
 \dt
 SELECT * FROM workout_entries ORDER BY created_at DESC;
 SELECT * FROM users ORDER BY created_at DESC;
+SELECT * FROM activities ORDER BY created_at DESC;
 ```
 
 You can also check the number of saved records:
@@ -87,6 +88,27 @@ Example response:
 ```json
 {"status":"ok"}
 ```
+
+### List activities
+
+```bash
+curl http://localhost:8000/api/activities
+```
+
+### Create an activity
+
+The MET value must be greater than `0` and no more than `30`:
+
+```bash
+curl -X POST http://localhost:8000/api/activities \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Rowing",
+    "metValue": 7.0
+  }'
+```
+
+The default activities are seeded automatically when the backend starts. Existing databases are upgraded with the user preference column automatically for this version; future schema changes should use a migration tool.
 
 ### Create a workout
 
