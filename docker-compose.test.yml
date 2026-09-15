@@ -39,7 +39,5 @@ services:
       [
         "pytest",
         "-q",
-        "--log-cli-level=INFO",
-        "--log-cli-format=%(asctime)s | %(levelname)s | %(name)s | %(message)s",
         "tests/integration",
       ]

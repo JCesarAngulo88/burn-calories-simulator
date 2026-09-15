@@ -55,6 +55,18 @@ docker compose -f docker-compose.test.yml down -v
 
 The `down -v` command removes the temporary test database volume and containers.
 
+## Run unit tests
+
+Unit tests cover individual calculation functions and Pydantic validation without
+requiring a database or API server. The test image can run them with this command:
+
+```bash
+docker compose -f docker-compose.test.yml run --rm tests pytest -q tests/unit
+```
+
+Pytest logging is enabled by default through `pytest.ini`, so this command also
+displays timestamped INFO messages from the unit tests.
+
 ## Check the PostgreSQL database
 
 Once the app is running, you can inspect the database directly from the PostgreSQL Docker container:
